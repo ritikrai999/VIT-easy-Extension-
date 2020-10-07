@@ -1,1 +1,22 @@
-var _0x215e=['forEach','setAttribute','onMessage','message','log','querySelectorAll','background:\x20#efd2a5;','style','textContent','background:\x20#e8ff82','Attendpage','td:nth-child(12)','runtime'];(function(_0x5816d3,_0x215e8c){var _0x3d46b9=function(_0x36447a){while(--_0x36447a){_0x5816d3['push'](_0x5816d3['shift']());}};_0x3d46b9(++_0x215e8c);}(_0x215e,0x1d6));var _0x3d46=function(_0x5816d3,_0x215e8c){_0x5816d3=_0x5816d3-0x0;var _0x3d46b9=_0x215e[_0x5816d3];return _0x3d46b9;};function attendFun(){var _0x564426=document[_0x3d46('0x3')]('#getStudentDetails\x20>\x20div\x20>\x20table\x20>\x20tbody\x20>\x20tr');_0x564426[_0x3d46('0xb')](_0x1de63c=>{const _0x2cd0a2=_0x1de63c['querySelector'](_0x3d46('0x9'));if(_0x2cd0a2){_0x2cd0a2['textContent']<0x4b&&_0x1de63c[_0x3d46('0xc')](_0x3d46('0x5'),_0x3d46('0x4'));if(_0x2cd0a2[_0x3d46('0x6')]>=0x4b&&_0x2cd0a2['textContent']<=0x50)_0x1de63c[_0x3d46('0xc')](_0x3d46('0x5'),_0x3d46('0x7'));}});}chrome[_0x3d46('0xa')][_0x3d46('0x0')]['addListener'](_0x4259c6=>{if(_0x4259c6[_0x3d46('0x1')]===_0x3d46('0x8'))try{attendFun();}catch(_0x5c6341){console[_0x3d46('0x2')](_0x5c6341);}});
+function attendFun()
+{
+    var rows = document.querySelectorAll("#getStudentDetails > div > table > tbody > tr");
+rows.forEach(row => {
+    const per = row.querySelector("td:nth-child(12)");if(per){
+    if (per.textContent < 75)
+    {
+        row.setAttribute("style","background: #efd2a5;");
+    }if(per.textContent>=75 && per.textContent<=85) row.setAttribute("style","background: #e8ff82");}
+})
+}
+chrome.runtime.onMessage.addListener(request => {
+    // console.log(request.message);
+    if (request.message === "Attendpage") {
+       try {          
+           attendFun();          
+       } catch (error) {
+           console.log(error);
+       }
+   }
+   console.log("done");
+}); 
