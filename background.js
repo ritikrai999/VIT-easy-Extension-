@@ -1,1 +1,54 @@
-const _0x44fc=['addListener','sendMessage','indexOf','vtop.vit.ac.in','getSelected','runtime','Attendpage','DAPage','doDigitalAssignment','removeRules','PageStateMatcher','addRules','*://vtop.vit.ac.in/*','declarativeContent','onInstalled','webRequest','url','processViewStudentAttendance','tabs','onPageChanged'];(function(_0x768a46,_0x44fcc6){const _0x3de600=function(_0x96d034){while(--_0x96d034){_0x768a46['push'](_0x768a46['shift']());}};_0x3de600(++_0x44fcc6);}(_0x44fc,0x83));const _0x3de6=function(_0x768a46,_0x44fcc6){_0x768a46=_0x768a46-0x0;let _0x3de600=_0x44fc[_0x768a46];return _0x3de600;};const returnMessage=_0x544a6b=>{chrome[_0x3de6('0x7')][_0x3de6('0xd')](null,function(_0x929752){chrome[_0x3de6('0x7')][_0x3de6('0xa')](_0x929752['id'],{'message':_0x544a6b});});};chrome[_0x3de6('0xe')][_0x3de6('0x3')][_0x3de6('0x9')](function(){chrome[_0x3de6('0x2')][_0x3de6('0x8')][_0x3de6('0x12')](undefined,function(){chrome[_0x3de6('0x2')]['onPageChanged'][_0x3de6('0x0')]([{'conditions':[new chrome['declarativeContent'][(_0x3de6('0x13'))]({'pageUrl':{'hostEquals':_0x3de6('0xc')}})],'actions':[new chrome[(_0x3de6('0x2'))]['ShowPageAction']()]}]);});}),chrome[_0x3de6('0x4')]['onCompleted'][_0x3de6('0x9')](_0x388593=>{let _0x52ef11=_0x388593[_0x3de6('0x5')];if(_0x52ef11['indexOf'](_0x3de6('0x11'))!==-0x1)returnMessage(_0x3de6('0x10'));else _0x52ef11[_0x3de6('0xb')](_0x3de6('0x6'))!==-0x1&&returnMessage(_0x3de6('0xf'));},{'urls':[_0x3de6('0x1')]});
+/**
+ * @module Background
+ */
+
+
+
+/**
+ * @function returnMessage
+ * @param {String} MessageToReturn
+ * Sends a message to the content script
+ */
+const returnMessage = MessageToReturn => {
+  chrome.tabs.getSelected(null, function(tab) {
+    chrome.tabs.sendMessage(tab.id, {
+      message: MessageToReturn
+    });
+  });
+};
+
+
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+    chrome.declarativeContent.onPageChanged.addRules([
+      {
+        conditions: [
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: { hostEquals: "vtop.vit.ac.in" }
+          })
+        ],
+        actions: [new chrome.declarativeContent.ShowPageAction()]
+      }
+    ]);
+  });
+});
+
+/**
+ * Fires after the completion of a request
+ */
+chrome.webRequest.onCompleted.addListener(
+  details => {
+    let link = details["url"];
+    
+    if (link.indexOf("doDigitalAssignment") !== -1 ) {
+      returnMessage("DAPage");
+    }
+    else if (link.indexOf("processViewStudentAttendance") !== -1 ) {
+      returnMessage("Attendpage");
+    }
+
+  },
+  {
+    urls: ["*://vtop.vit.ac.in/*"]
+  }
+);
